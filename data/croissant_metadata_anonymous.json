@@ -1,0 +1,411 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "equivalentProperty": "cr:equivalentProperty",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "hallucination-severity",
+  "description": "Factuality evaluation in claim verification settings has largely focused on detecting hallucinations as binary phenomena\u2014labeling content as either supported or unsupported by the reference. However, modern LLMs increasingly generate nuanced, partially grounded content whose factual impact can vary widely\u2014from benign inferences to severe distortions. To enable more precise assessment, we propose a framework for annotating hallucination severity along two interpretable dimensions: implausibility, and impact. Applying this framework to human annotations across domains, we find that many hallucinations are both plausible and benign, indicating that not all unsupported content is equally consequential. Our analysis shows that annotator disagreement is most common in borderline cases and primarily reflects differences in how strictly annotators apply severity thresholds when identifying hallucinations, rather than noise. We also show that severity-aware evaluation can meaningfully alter model rankings, favoring models that generate more frequent yet benign hallucinations over those producing fewer but more detrimental errors\u2014distinctions that conventional evaluation settings fail to capture. Finally, we evaluate the extent to which automatic metrics and LLMs capture hallucination severity. While existing metrics show weak correlation with human severity judgments, LLMs exhibit strong alignment despite over-annotating hallucination spans---making them promising candidates for scaling fine-grained severity annotation. Overall, our findings highlight the benefits of a shift toward severity-aware frameworks in factuality evaluation",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "url": "https://anonymous.4open.science/r/hallucination_severity_data-DB30/",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "jsonl-file",
+      "name": "processed_annotations_main.jsonl",
+      "description": "Processed medical annotations in JSONL format (newline-delimited JSON)",
+      "contentUrl": "processed_annotations/processed_annotations_main.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "sha256": "ee8478c2a811a4599d03d5722d523d8161affed5bb13f23d5854f7b01e8499fe"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "annotations",
+      "name": "annotations",
+      "description": "Medical annotation records with multiple annotator perspectives on hallucination severity",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/source",
+          "name": "source",
+          "description": "The source document text",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "source"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/summary",
+          "name": "summary",
+          "description": "Generated summary of the document",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "summary"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/docid",
+          "name": "docid",
+          "description": "Unique document identifier",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "docid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/benchmark_dataset_name",
+          "name": "benchmark_dataset_name",
+          "description": "Name of the benchmark dataset",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "benchmark_dataset_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/origin",
+          "name": "origin",
+          "description": "Origin of the dataset",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "origin"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/model",
+          "name": "model",
+          "description": "Model used to generate the summary",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "model"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/agreed_spans",
+          "name": "agreed_spans",
+          "description": "Spans agreed upon by at least 2 annotators",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "agreed_spans"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_1_spans",
+          "name": "ann_1_spans",
+          "description": "Text spans identified by annotator 1",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_1_spans"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_1_categories",
+          "name": "ann_1_categories",
+          "description": "Error categories assigned by annotator 1 (e.g., mistake, inference, somewhat_mistake)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_1_categories"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_1_likelihood",
+          "name": "ann_1_likelihood",
+          "description": "Likelihood ratings by annotator 1 (e.g., likely, not_likely, somewhat_likely)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_1_likelihood"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_1_knowledge",
+          "name": "ann_1_knowledge",
+          "description": "Knowledge commonality ratings by annotator 1 (e.g., common, somewhat_common, no)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_1_knowledge"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_1_consequence",
+          "name": "ann_1_consequence",
+          "description": "Consequence severity ratings by annotator 1 (e.g., high_consequence, low_consequence)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_1_consequence"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_2_spans",
+          "name": "ann_2_spans",
+          "description": "Text spans identified by annotator 2",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_2_spans"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_2_categories",
+          "name": "ann_2_categories",
+          "description": "Error categories assigned by annotator 2",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_2_categories"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_2_likelihood",
+          "name": "ann_2_likelihood",
+          "description": "Likelihood ratings by annotator 2",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_2_likelihood"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_2_knowledge",
+          "name": "ann_2_knowledge",
+          "description": "Knowledge commonality ratings by annotator 2",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_2_knowledge"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_2_consequence",
+          "name": "ann_2_consequence",
+          "description": "Consequence severity ratings by annotator 2",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_2_consequence"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_3_spans",
+          "name": "ann_3_spans",
+          "description": "Text spans identified by annotator 3",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_3_spans"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_3_categories",
+          "name": "ann_3_categories",
+          "description": "Error categories assigned by annotator 3",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_3_categories"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_3_likelihood",
+          "name": "ann_3_likelihood",
+          "description": "Likelihood ratings by annotator 3",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_3_likelihood"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_3_knowledge",
+          "name": "ann_3_knowledge",
+          "description": "Knowledge commonality ratings by annotator 3",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_3_knowledge"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "annotations/ann_3_consequence",
+          "name": "ann_3_consequence",
+          "description": "Consequence severity ratings by annotator 3",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "jsonl-file"
+            },
+            "extract": {
+              "column": "ann_3_consequence"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "rai:dataLimitations": "This dataset consists of severity annotations across two specific attributes implausibility and impact.",
+  "rai:dataBiases": "Annotations were obtained using expert linguists",
+  "rai:personalSensitiveInformation": "The dataset consists of benchmarks XSUM, ACIBENCH and REDDITAny sensitive information listed across the benchmarks may be present in this dataset",
+  "rai:dataUseCases": "The dataset has the following potential use cases:1) Evaluation of metrics developed for automatic hallucination detection. Metrics can be tested to ennsure sensitivity across varying severities along with tests to ensure metric scores are meaningful",
+  "rai:dataSocialImpact": "The dataset enables more nuanced evaluation of both models and metric performanceThe framework could also be potentially useful for RL settings by designing rewards to curb more severe errors specifically ",
+  "rai:hasSyntheticData": false
+}
